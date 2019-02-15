@@ -1,5 +1,5 @@
 # Yandex-project
-
+![alt text](https://github.com/Chiplinka/Yandex-project/tree/master/data/pyt.jpg)
 # Введение
 Yandex-project - видеоигра в жанре "платформер", разработанная на популярном и
  современном  языке программирования Python. Весь заявленный функционал реализован в 
