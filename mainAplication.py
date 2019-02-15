@@ -4,10 +4,6 @@ import sys
 
 pygame.init()
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
-
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
@@ -216,7 +212,7 @@ class Level():
         self.mas_en.update()
 
     def draw(self, screen):
-        screen.fill(BLUE)
+        screen.fill((0, 0, 255))
         screen.blit(self.bckgrn, (self.wldshf // 3, 0))
 
         self.mas_plat.draw(screen)
@@ -239,7 +235,7 @@ class lvl1(Level):
         Level.__init__(self, gamer)
 
         self.bckgrn = pygame.image.load("data/bg1.png").convert()
-        self.bckgrn.set_colorkey(WHITE)
+        self.bckgrn.set_colorkey((255, 255, 255))
         self.lim = -2500
         # массив платформ
         level = [[travplatlf, 500, 500],
@@ -305,7 +301,7 @@ class lvl2(Level):
         Level.__init__(self, gamer)
 
         self.bckgrn = pygame.image.load("data/bg2.png").convert()
-        self.bckgrn.set_colorkey(WHITE)
+        self.bckgrn.set_colorkey((255, 255, 255))
         self.lim = -1000
         # массив с платформами
         level = [[kamplatleft, 500, 550],
@@ -371,7 +367,7 @@ class SpriteSheet(object):
     def get_image(self, x, y, width, height):
         image = pygame.Surface([width, height]).convert()
         image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
-        image.set_colorkey(BLACK)
+        image.set_colorkey((0, 0, 0))
         return image
 
 
@@ -514,7 +510,7 @@ def start_screen():
     '''
 
     font = pygame.font.Font('./data/Amatic-Bold.ttf', 36)
-    screen.fill(pygame.Color("black"))
+    screen.fill((0, 0, 0))
     button = load_image('button.png')
 
     screen.blit(button, (300, 200))
