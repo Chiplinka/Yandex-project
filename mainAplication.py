@@ -14,7 +14,7 @@ clock = pygame.time.Clock()
 
 FPS = 60
 
-pygame.display.set_caption("Yandex project")
+pygame.display.set_caption("Yandex-project")
 
 travplatlf = (576, 720, 70, 70)
 travplatrt = (576, 576, 70, 70)
