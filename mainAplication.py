@@ -4,6 +4,7 @@ import sys
 
 pygame.init()
 
+cur_lvl_no = 0
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
@@ -133,6 +134,7 @@ class Gamer(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self):
+
         self.calc_grav()
         self.rect.x += self.change_x
 
@@ -170,9 +172,12 @@ class Gamer(pygame.sprite.Sprite):
         else:
             self.change_y += .35
 
-        if self.rect.y >= SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
+        if self.rect.y >= SCREEN_HEIGHT:
+            game_lose()
+
+        if self.rect.y >= 510 and self.change_y >= 0:
             self.change_y = 0
-            self.rect.y = SCREEN_HEIGHT - self.rect.height
+            self.rect.y = 510
 
     def jump(self):
         self.rect.y += 2
@@ -212,7 +217,11 @@ class Level():
         self.mas_en.update()
 
     def draw(self, screen):
-        screen.fill((0, 0, 255))
+        screen.fill((25, 71, 126))
+        if cur_lvl_no == 0 :
+            screen.fill((25, 71, 126))
+        else:
+            screen.fill((74, 174, 199))
         screen.blit(self.bckgrn, (self.wldshf // 3, 0))
 
         self.mas_plat.draw(screen)
@@ -238,44 +247,45 @@ class lvl1(Level):
         self.bckgrn.set_colorkey((255, 255, 255))
         self.lim = -2500
         # массив платформ
-        level = [[travplatlf, 500, 500],
+        level = [
+            [travplatlf, 500, 500],
+            [travplat, 570, 500],
+            [travplatrt, 640, 500],
 
-                 [travplat, 90, 400],
-                 [travplat, 90, 450],
-                 [travplat, 90, 500],
+            [travplatlf, 200, 500],
+            [travplat, 270, 500],
+            [travplatrt, 340, 500],
 
-                 [travplat, 90, 550],
-                 [travplat, 90, 600],
-                 [travplat, 90, 650],
+            [travplatlf, 800, 400],
+            [travplat, 870, 400],
+            [travplatrt, 940, 400],
+            [travplatlf, 1000, 500],
+            [travplat, 1070, 500],
+            [travplatrt, 1140, 500],
+            [kamplatleft, 1120, 280],
+            [kamplatsr, 1190, 280],
+            [kamplatrt, 1260, 280],
 
-                 [travplat, 20, 400],
-                 [travplat, 20, 450],
-                 [travplat, 20, 500],
+            [kamplatleft, 1700, 200],
+            [kamplatsr, 1770, 200],
+            [kamplatrt, 1840, 200],
 
-                 [travplat, 20, 550],
-                 [travplat, 20, 600],
-                 [travplat, 20, 650],
+            [kamplatleft, 2200, 350],
+            [kamplatsr, 2270, 350],
+            [kamplatrt, 2340, 350],
 
-                 [travplat, -50, 400],
-                 [travplat, -50, 450],
-                 [travplat, -50, 500],
+            [kamplatleft, 2500, 400],
+            [kamplatsr, 2570, 400],
+            [kamplatrt, 2640, 400],
 
-                 [travplat, -50, 550],
-                 [travplat, -50, 600],
-                 [travplat, -50, 650],
+            [kamplatleft, 3000, 400],
+            [kamplatsr, 3070, 400],
+            [kamplatrt, 3140, 400],
 
-                 [travplat, 570, 500],
-                 [travplatrt, 640, 500],
-                 [travplatlf, 800, 400],
-                 [travplat, 870, 400],
-                 [travplatrt, 940, 400],
-                 [travplatlf, 1000, 500],
-                 [travplat, 1070, 500],
-                 [travplatrt, 1140, 500],
-                 [kamplatleft, 1120, 280],
-                 [kamplatsr, 1190, 280],
-                 [kamplatrt, 1260, 280],
-                 ]
+            [kamplatleft, 3400, 400],
+            [kamplatsr, 3470, 400],
+            [kamplatrt, 3540, 400],
+        ]
 
         for platform in level:
             block = Platform(platform[0])
@@ -305,31 +315,6 @@ class lvl2(Level):
         self.lim = -1000
         # массив с платформами
         level = [[kamplatleft, 500, 550],
-
-                 [travplat, 90, 400],
-                 [travplat, 90, 450],
-                 [travplat, 90, 500],
-
-                 [travplat, 90, 550],
-                 [travplat, 90, 600],
-                 [travplat, 90, 650],
-
-                 [travplat, 20, 400],
-                 [travplat, 20, 450],
-                 [travplat, 20, 500],
-
-                 [travplat, 20, 550],
-                 [travplat, 20, 600],
-                 [travplat, 20, 650],
-
-                 [travplat, -50, 400],
-                 [travplat, -50, 450],
-                 [travplat, -50, 500],
-
-                 [travplat, -50, 550],
-                 [travplat, -50, 600],
-                 [travplat, -50, 650],
-
                  [kamplatsr, 570, 550],
                  [kamplatrt, 640, 550],
                  [travplatlf, 800, 400],
@@ -392,6 +377,7 @@ def terminate():
     Прерывание игры
     :return:
     '''
+
     pygame.quit()
     sys.exit()
 
@@ -401,10 +387,13 @@ def game_win():
     x = -800
     y = 0
     v = 400
+    count = 0
     running = True
     while running:
-
-        screen.fill((0, 0, 255))
+        count += 1
+        if count >= 200:
+            running = False
+        screen.fill((255, 255, 255))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -415,15 +404,42 @@ def game_win():
             x += v / FPS
         pygame.display.flip()
 
+    restart_screen()
+
+    terminate()
+
+
+def game_lose():
+    image = load_image("over.jpg")
+    x = 0
+    y = 0
+    v = 400
+    count = 0
+    fl = False
+    running = True
+    while running:
+        count += 1
+        if count >= 100:
+            running = False
+        screen.fill((0, 0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        screen.blit(image, (int(x), int(y)))
+        clock.tick(FPS)
+        pygame.display.flip()
+    restart_screen()
+
     terminate()
 
 
 def main():
+    global cur_lvl_no
     gamer = Gamer()
 
     ##
-    pygame.mixer.music.load('data/bck_music.mp3')
-    pygame.mixer.music.play(-1)
+    # pygame.mixer.music.load('data/bck_music.mp3')
+    # pygame.mixer.music.play(-1)
     ##
 
     # Создание уровней
@@ -432,14 +448,14 @@ def main():
     lvl_list.append(lvl1(gamer))
     lvl_list.append(lvl2(gamer))
 
-    cur_lvl_no = 0
     cur_lvl = lvl_list[cur_lvl_no]
 
     all_sprites = pygame.sprite.Group()
     gamer.level = cur_lvl
 
-    gamer.rect.x = 340
+    gamer.rect.x = 200
     gamer.rect.y = SCREEN_HEIGHT - gamer.rect.height
+    gamer.rect.y = 400
     all_sprites.add(gamer)
 
     running = True
@@ -462,7 +478,6 @@ def main():
                     gamer.stop()
                 if event.key == pygame.K_RIGHT and gamer.change_x > 0:
                     gamer.stop()
-
         all_sprites.update()
         cur_lvl.update()
         pos = gamer.rect.x + cur_lvl.wldshf
@@ -483,6 +498,7 @@ def main():
         # загружаутся следующий уровень
 
         pos = gamer.rect.x + cur_lvl.wldshf
+        print(pos)
         if pos < cur_lvl.lim:
             gamer.rect.x = 120
 
@@ -494,7 +510,7 @@ def main():
                 cur_lvl = lvl_list[cur_lvl_no]
                 gamer.level = cur_lvl
                 gamer.rect.x = 340
-
+        screen.fill((0, 255, 0))
         cur_lvl.draw(screen)
         all_sprites.draw(screen)
 
@@ -537,4 +553,39 @@ def start_screen():
         clock.tick(FPS)
 
 
-start_screen()
+def restart_screen():
+    '''
+    Начальная заставка с кнопками
+    :return:
+    '''
+
+    font = pygame.font.Font('./data/Amatic-Bold.ttf', 36)
+    screen.fill((0, 0, 0))
+    button = load_image('button.png')
+
+    screen.blit(button, (300, 200))
+    render = font.render('RESTART', 1, pygame.Color('darkgreen'))
+    intro_rect = render.get_rect().move(350, 200)
+    screen.blit(render, intro_rect)
+
+    screen.blit(button, (300, 250))
+    render = font.render('EXIT', 1, pygame.Color('red'))
+    intro_rect = render.get_rect().move(360, 250)
+    screen.blit(render, intro_rect)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if 300 <= event.pos[0] <= 500 and 200 <= event.pos[1] <= 245:
+                    main()
+                    return
+                if 300 <= event.pos[0] <= 500 and 250 <= event.pos[1] <= 295:
+                    terminate()
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+# start_screen()
+main()
