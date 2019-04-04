@@ -323,7 +323,6 @@ class lvl2(Level):
             [kamplatsr, 370, 550],
             [kamplatrt, 440, 550],
 
-
             [kamplatleft, 500, 550],
             [kamplatsr, 570, 550],
             [kamplatrt, 640, 550],
@@ -456,8 +455,8 @@ def main():
     gamer = Gamer()
 
     ##
-    # pygame.mixer.music.load('data/bck_music.mp3')
-    # pygame.mixer.music.play(-1)
+    pygame.mixer.music.load('data/bck_music.mp3')
+    pygame.mixer.music.play(-1)
     ##
 
     # Создание уровней
@@ -604,4 +603,4 @@ def restart_screen():
 
 
 start_screen()
-#main()
+# main()
