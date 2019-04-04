@@ -175,9 +175,9 @@ class Gamer(pygame.sprite.Sprite):
         if self.rect.y >= SCREEN_HEIGHT:
             game_lose()
 
-        if self.rect.y >= 510 and self.change_y >= 0:
-            self.change_y = 0
-            self.rect.y = 510
+        # if self.rect.y >= 510 and self.change_y >= 0:
+        #     self.change_y = 0
+        #     self.rect.y = 510
 
     def jump(self):
         self.rect.y += 2
@@ -218,7 +218,7 @@ class Level():
 
     def draw(self, screen):
         screen.fill((25, 71, 126))
-        if cur_lvl_no == 0 :
+        if cur_lvl_no == 0:
             screen.fill((25, 71, 126))
         else:
             screen.fill((74, 174, 199))
@@ -314,19 +314,37 @@ class lvl2(Level):
         self.bckgrn.set_colorkey((255, 255, 255))
         self.lim = -1000
         # массив с платформами
-        level = [[kamplatleft, 500, 550],
-                 [kamplatsr, 570, 550],
-                 [kamplatrt, 640, 550],
-                 [travplatlf, 800, 400],
-                 [travplat, 870, 400],
-                 [travplatrt, 940, 400],
-                 [travplatlf, 1000, 500],
-                 [travplat, 1070, 500],
-                 [travplatrt, 1140, 500],
-                 [kamplatleft, 1120, 280],
-                 [kamplatsr, 1190, 280],
-                 [kamplatrt, 1260, 280],
-                 ]
+        level = [
+            [kamplatleft, 150, 550],
+            [kamplatsr, 220, 550],
+            [kamplatrt, 290, 550],
+
+            [kamplatleft, 300, 550],
+            [kamplatsr, 370, 550],
+            [kamplatrt, 440, 550],
+
+
+            [kamplatleft, 500, 550],
+            [kamplatsr, 570, 550],
+            [kamplatrt, 640, 550],
+            [travplatlf, 800, 400],
+            [travplat, 870, 400],
+            [travplatrt, 940, 400],
+            [travplatlf, 1000, 500],
+            [travplat, 1070, 500],
+            [travplatrt, 1140, 500],
+            [kamplatleft, 1120, 280],
+            [kamplatsr, 1190, 280],
+            [kamplatrt, 1260, 280],
+
+            [kamplatleft, 1600, 100],
+            [kamplatsr, 1670, 100],
+            [kamplatrt, 1740, 100],
+
+            [kamplatleft, 1850, 300],
+            [kamplatsr, 1920, 300],
+            [kamplatrt, 1990, 300],
+        ]
         for platform in level:
             block = Platform(platform[0])
             block.rect.x = platform[1]
@@ -487,8 +505,6 @@ def main():
             gamer.rect.x = 500
             cur_lvl.shift_world(-diff)
 
-        # print(gamer.rect.x)
-
         if gamer.rect.x <= 120:
             diff = 120 - gamer.rect.x
             gamer.rect.x = 120
@@ -498,7 +514,7 @@ def main():
         # загружаутся следующий уровень
 
         pos = gamer.rect.x + cur_lvl.wldshf
-        print(pos)
+
         if pos < cur_lvl.lim:
             gamer.rect.x = 120
 
@@ -587,5 +603,5 @@ def restart_screen():
         clock.tick(FPS)
 
 
-# start_screen()
-main()
+start_screen()
+#main()
